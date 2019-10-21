@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="data/Potensi_Desa_0.js"></script>
+        <script src="data/Lokasi_IKN_1.js"></script>
+        <script src="data/Peta_Jalan_Tol_2.js"></script>
+        <script src="data/Peta_Jalan_Provinsi_3.js"></script>
+        <script src="data/Peta_Jalan_Nasional_4.js"></script>
+        <script src="data/Peta_Jalan_Kabupaten_5.js"></script>
+        <script src="data/Penetapan_Kawasan_Hutan_6.js"></script>
+        <script src="data/Tubuh_Air_7.js"></script>
+        <script src="data/Jalan_RBI_IKN_8.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[-1.9645821159448806,114.55677133720476],[0.8797292840551145,119.6183018600394]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_Potensi_Desa_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVNO'] !== null ? Autolinker.link(String(feature.properties['PROVNO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KABKOTNO'] !== null ? Autolinker.link(String(feature.properties['KABKOTNO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KECNO'] !== null ? Autolinker.link(String(feature.properties['KECNO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PROVINSI'] !== null ? Autolinker.link(String(feature.properties['PROVINSI'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KABKOT'] !== null ? Autolinker.link(String(feature.properties['KABKOT'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KECAMATAN'] !== null ? Autolinker.link(String(feature.properties['KECAMATAN'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PLN'] !== null ? Autolinker.link(String(feature.properties['PLN'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BBM_GASK'] !== null ? Autolinker.link(String(feature.properties['BBM_GASK'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BBM_LPG'] !== null ? Autolinker.link(String(feature.properties['BBM_LPG'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BBM_MITAN'] !== null ? Autolinker.link(String(feature.properties['BBM_MITAN'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BBM_KAYU'] !== null ? Autolinker.link(String(feature.properties['BBM_KAYU'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BBM_LAIN'] !== null ? Autolinker.link(String(feature.properties['BBM_LAIN'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FAS_DIKSAR'] !== null ? Autolinker.link(String(feature.properties['FAS_DIKSAR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FAS_KES'] !== null ? Autolinker.link(String(feature.properties['FAS_KES'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['INDUSTRI'] !== null ? Autolinker.link(String(feature.properties['INDUSTRI'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KUMUH'] !== null ? Autolinker.link(String(feature.properties['KUMUH'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CEMAR_AIR'] !== null ? Autolinker.link(String(feature.properties['CEMAR_AIR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CEMAR_TNH'] !== null ? Autolinker.link(String(feature.properties['CEMAR_TNH'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CEMAR_UDR'] !== null ? Autolinker.link(String(feature.properties['CEMAR_UDR'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KD_SMU'] !== null ? Autolinker.link(String(feature.properties['KD_SMU'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KD_S1'] !== null ? Autolinker.link(String(feature.properties['KD_S1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KD_S3'] !== null ? Autolinker.link(String(feature.properties['KD_S3'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TAHUN_DATA'] !== null ? Autolinker.link(String(feature.properties['TAHUN_DATA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['IDKEC'] !== null ? Autolinker.link(String(feature.properties['IDKEC'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Potensi_Desa_0_0() {
+            return {
+                pane: 'pane_Potensi_Desa_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,207,80,1.0)',
+            }
+        }
+        map.createPane('pane_Potensi_Desa_0');
+        map.getPane('pane_Potensi_Desa_0').style.zIndex = 400;
+        map.getPane('pane_Potensi_Desa_0').style['mix-blend-mode'] = 'normal';
+        var layer_Potensi_Desa_0 = new L.geoJson(json_Potensi_Desa_0, {
+            attribution: '',
+            pane: 'pane_Potensi_Desa_0',
+            onEachFeature: pop_Potensi_Desa_0,
+            style: style_Potensi_Desa_0_0,
+        });
+        bounds_group.addLayer(layer_Potensi_Desa_0);
+        map.addLayer(layer_Potensi_Desa_0);
+        function pop_Lokasi_IKN_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Lokasi_IKN_1_0() {
+            return {
+                pane: 'pane_Lokasi_IKN_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,1.0)',
+            }
+        }
+        map.createPane('pane_Lokasi_IKN_1');
+        map.getPane('pane_Lokasi_IKN_1').style.zIndex = 401;
+        map.getPane('pane_Lokasi_IKN_1').style['mix-blend-mode'] = 'normal';
+        var layer_Lokasi_IKN_1 = new L.geoJson(json_Lokasi_IKN_1, {
+            attribution: '',
+            pane: 'pane_Lokasi_IKN_1',
+            onEachFeature: pop_Lokasi_IKN_1,
+            style: style_Lokasi_IKN_1_0,
+        });
+        bounds_group.addLayer(layer_Lokasi_IKN_1);
+        map.addLayer(layer_Lokasi_IKN_1);
+        function pop_Peta_Jalan_Tol_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nm_Inf'] !== null ? Autolinker.link(String(feature.properties['Nm_Inf'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Peta_Jalan_Tol_2_0() {
+            return {
+                pane: 'pane_Peta_Jalan_Tol_2',
+                opacity: 1,
+                color: 'rgba(125,139,143,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_Peta_Jalan_Tol_2');
+        map.getPane('pane_Peta_Jalan_Tol_2').style.zIndex = 402;
+        map.getPane('pane_Peta_Jalan_Tol_2').style['mix-blend-mode'] = 'normal';
+        var layer_Peta_Jalan_Tol_2 = new L.geoJson(json_Peta_Jalan_Tol_2, {
+            attribution: '',
+            pane: 'pane_Peta_Jalan_Tol_2',
+            onEachFeature: pop_Peta_Jalan_Tol_2,
+            style: style_Peta_Jalan_Tol_2_0,
+        });
+        bounds_group.addLayer(layer_Peta_Jalan_Tol_2);
+        map.addLayer(layer_Peta_Jalan_Tol_2);
+        function pop_Peta_Jalan_Provinsi_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nm_Ruas'] !== null ? Autolinker.link(String(feature.properties['Nm_Ruas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Peta_Jalan_Provinsi_3_0() {
+            return {
+                pane: 'pane_Peta_Jalan_Provinsi_3',
+                opacity: 1,
+                color: 'rgba(145,82,45,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_Peta_Jalan_Provinsi_3');
+        map.getPane('pane_Peta_Jalan_Provinsi_3').style.zIndex = 403;
+        map.getPane('pane_Peta_Jalan_Provinsi_3').style['mix-blend-mode'] = 'normal';
+        var layer_Peta_Jalan_Provinsi_3 = new L.geoJson(json_Peta_Jalan_Provinsi_3, {
+            attribution: '',
+            pane: 'pane_Peta_Jalan_Provinsi_3',
+            onEachFeature: pop_Peta_Jalan_Provinsi_3,
+            style: style_Peta_Jalan_Provinsi_3_0,
+        });
+        bounds_group.addLayer(layer_Peta_Jalan_Provinsi_3);
+        map.addLayer(layer_Peta_Jalan_Provinsi_3);
+        function pop_Peta_Jalan_Nasional_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID_1'] !== null ? Autolinker.link(String(feature.properties['OBJECTID_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nm_Inf'] !== null ? Autolinker.link(String(feature.properties['Nm_Inf'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Peta_Jalan_Nasional_4_0() {
+            return {
+                pane: 'pane_Peta_Jalan_Nasional_4',
+                opacity: 1,
+                color: 'rgba(190,178,151,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_Peta_Jalan_Nasional_4');
+        map.getPane('pane_Peta_Jalan_Nasional_4').style.zIndex = 404;
+        map.getPane('pane_Peta_Jalan_Nasional_4').style['mix-blend-mode'] = 'normal';
+        var layer_Peta_Jalan_Nasional_4 = new L.geoJson(json_Peta_Jalan_Nasional_4, {
+            attribution: '',
+            pane: 'pane_Peta_Jalan_Nasional_4',
+            onEachFeature: pop_Peta_Jalan_Nasional_4,
+            style: style_Peta_Jalan_Nasional_4_0,
+        });
+        bounds_group.addLayer(layer_Peta_Jalan_Nasional_4);
+        map.addLayer(layer_Peta_Jalan_Nasional_4);
+        function pop_Peta_Jalan_Kabupaten_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Nm_Ruas'] !== null ? Autolinker.link(String(feature.properties['Nm_Ruas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Peta_Jalan_Kabupaten_5_0() {
+            return {
+                pane: 'pane_Peta_Jalan_Kabupaten_5',
+                opacity: 1,
+                color: 'rgba(196,60,57,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_Peta_Jalan_Kabupaten_5');
+        map.getPane('pane_Peta_Jalan_Kabupaten_5').style.zIndex = 405;
+        map.getPane('pane_Peta_Jalan_Kabupaten_5').style['mix-blend-mode'] = 'normal';
+        var layer_Peta_Jalan_Kabupaten_5 = new L.geoJson(json_Peta_Jalan_Kabupaten_5, {
+            attribution: '',
+            pane: 'pane_Peta_Jalan_Kabupaten_5',
+            onEachFeature: pop_Peta_Jalan_Kabupaten_5,
+            style: style_Peta_Jalan_Kabupaten_5_0,
+        });
+        bounds_group.addLayer(layer_Peta_Jalan_Kabupaten_5);
+        map.addLayer(layer_Peta_Jalan_Kabupaten_5);
+        function pop_Penetapan_Kawasan_Hutan_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMOBJ'] !== null ? Autolinker.link(String(feature.properties['NAMOBJ'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Penetapan_Kawasan_Hutan_6_0() {
+            return {
+                pane: 'pane_Penetapan_Kawasan_Hutan_6',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,182,54,1.0)',
+            }
+        }
+        map.createPane('pane_Penetapan_Kawasan_Hutan_6');
+        map.getPane('pane_Penetapan_Kawasan_Hutan_6').style.zIndex = 406;
+        map.getPane('pane_Penetapan_Kawasan_Hutan_6').style['mix-blend-mode'] = 'normal';
+        var layer_Penetapan_Kawasan_Hutan_6 = new L.geoJson(json_Penetapan_Kawasan_Hutan_6, {
+            attribution: '',
+            pane: 'pane_Penetapan_Kawasan_Hutan_6',
+            onEachFeature: pop_Penetapan_Kawasan_Hutan_6,
+            style: style_Penetapan_Kawasan_Hutan_6_0,
+        });
+        bounds_group.addLayer(layer_Penetapan_Kawasan_Hutan_6);
+        map.addLayer(layer_Penetapan_Kawasan_Hutan_6);
+        function pop_Tubuh_Air_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KAB_KOTA_1'] !== null ? Autolinker.link(String(feature.properties['KAB_KOTA_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? Autolinker.link(String(feature.properties['Shape_Area'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Tubuh_Air_7_0() {
+            return {
+                pane: 'pane_Tubuh_Air_7',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,125,183,1.0)',
+            }
+        }
+        map.createPane('pane_Tubuh_Air_7');
+        map.getPane('pane_Tubuh_Air_7').style.zIndex = 407;
+        map.getPane('pane_Tubuh_Air_7').style['mix-blend-mode'] = 'normal';
+        var layer_Tubuh_Air_7 = new L.geoJson(json_Tubuh_Air_7, {
+            attribution: '',
+            pane: 'pane_Tubuh_Air_7',
+            onEachFeature: pop_Tubuh_Air_7,
+            style: style_Tubuh_Air_7_0,
+        });
+        bounds_group.addLayer(layer_Tubuh_Air_7);
+        map.addLayer(layer_Tubuh_Air_7);
+        function pop_Jalan_RBI_IKN_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(String(feature.properties['fid'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAMRJL'] !== null ? Autolinker.link(String(feature.properties['NAMRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KONRJL'] !== null ? Autolinker.link(String(feature.properties['KONRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MATRJL'] !== null ? Autolinker.link(String(feature.properties['MATRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FGSRJL'] !== null ? Autolinker.link(String(feature.properties['FGSRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['UTKRJL'] !== null ? Autolinker.link(String(feature.properties['UTKRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['TOLRJL'] !== null ? Autolinker.link(String(feature.properties['TOLRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['WLYRJL'] !== null ? Autolinker.link(String(feature.properties['WLYRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AUTRJL'] !== null ? Autolinker.link(String(feature.properties['AUTRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KLSRJL'] !== null ? Autolinker.link(String(feature.properties['KLSRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SPCRJL'] !== null ? Autolinker.link(String(feature.properties['SPCRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JPARJL'] !== null ? Autolinker.link(String(feature.properties['JPARJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ARHRJL'] !== null ? Autolinker.link(String(feature.properties['ARHRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['STARJL'] !== null ? Autolinker.link(String(feature.properties['STARJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KLLRJL'] !== null ? Autolinker.link(String(feature.properties['KLLRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MEDRJL'] !== null ? Autolinker.link(String(feature.properties['MEDRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LOCRJL'] !== null ? Autolinker.link(String(feature.properties['LOCRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['JARRJL'] !== null ? Autolinker.link(String(feature.properties['JARRJL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FCODE'] !== null ? Autolinker.link(String(feature.properties['FCODE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['REMARK'] !== null ? Autolinker.link(String(feature.properties['REMARK'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SRS_ID'] !== null ? Autolinker.link(String(feature.properties['SRS_ID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LCODE'] !== null ? Autolinker.link(String(feature.properties['LCODE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['METADATA'] !== null ? Autolinker.link(String(feature.properties['METADATA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Leng'] !== null ? Autolinker.link(String(feature.properties['SHAPE_Leng'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Length'] !== null ? Autolinker.link(String(feature.properties['Shape_Length'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jalan_RBI_IKN_8_0() {
+            return {
+                pane: 'pane_Jalan_RBI_IKN_8',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_Jalan_RBI_IKN_8');
+        map.getPane('pane_Jalan_RBI_IKN_8').style.zIndex = 408;
+        map.getPane('pane_Jalan_RBI_IKN_8').style['mix-blend-mode'] = 'normal';
+        var layer_Jalan_RBI_IKN_8 = new L.geoJson(json_Jalan_RBI_IKN_8, {
+            attribution: '',
+            pane: 'pane_Jalan_RBI_IKN_8',
+            onEachFeature: pop_Jalan_RBI_IKN_8,
+            style: style_Jalan_RBI_IKN_8_0,
+        });
+        bounds_group.addLayer(layer_Jalan_RBI_IKN_8);
+        map.addLayer(layer_Jalan_RBI_IKN_8);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Jalan_RBI_IKN_8.png" /> Jalan_RBI_IKN': layer_Jalan_RBI_IKN_8,'<img src="legend/Tubuh_Air_7.png" /> Tubuh_Air': layer_Tubuh_Air_7,'<img src="legend/Penetapan_Kawasan_Hutan_6.png" /> Penetapan_Kawasan_Hutan': layer_Penetapan_Kawasan_Hutan_6,'<img src="legend/Peta_Jalan_Kabupaten_5.png" /> Peta_Jalan_Kabupaten': layer_Peta_Jalan_Kabupaten_5,'<img src="legend/Peta_Jalan_Nasional_4.png" /> Peta_Jalan_Nasional': layer_Peta_Jalan_Nasional_4,'<img src="legend/Peta_Jalan_Provinsi_3.png" /> Peta_Jalan_Provinsi': layer_Peta_Jalan_Provinsi_3,'<img src="legend/Peta_Jalan_Tol_2.png" /> Peta_Jalan_Tol': layer_Peta_Jalan_Tol_2,'<img src="legend/Lokasi_IKN_1.png" /> Lokasi_IKN': layer_Lokasi_IKN_1,'<img src="legend/Potensi_Desa_0.png" /> Potensi_Desa': layer_Potensi_Desa_0,}).addTo(map);
+        setBounds();
+            //Satu basemap
+var basemap0 = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors,<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        </script>
+    </body>
+</html>
